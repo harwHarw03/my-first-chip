@@ -15,3 +15,5 @@ First, i gonna create a simple ALU for binary operation like addition and bitwis
 Will be A, B, Result data, and ALUop (operation signal) there!@
 
 goin to implement it using ‘case’ syntax
+
+update : "wire [3:0] Result;" use wire on testbench because the result is output, and outputs on tesbench are driven by DUT (device under test)
