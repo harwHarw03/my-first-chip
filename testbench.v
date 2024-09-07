@@ -1,39 +1,39 @@
-module ALU_tb;
-reg [3:0] A, B;
-wire [3:0] Result;
-reg [1:0] ALUop;
+module cpu_tb;
 
-ALU uut(
-    .A(A),
-    .B(B),
-    .Result(Result),
-    .ALUop(ALUop)
-);
+    reg clk, reset;
+    wire [7:0] pc_out;
+    wire [3:0] alu_result;
 
-initial begin 
-    A = 4'b0100;
-    B = 4'b0001;
-end
+    // Instantiate the CPU
+    CPU myCPU (
+        .clk(clk),
+        .reset(reset),
+        .pc_out(pc_out),
+        .alu_result(alu_result)
+    );
 
-initial begin 
+    // Generate the clock signal
+    always begin
+        #5 clk = ~clk;  // Toggle clock every 5 time units
+    end
 
-    $dumpfile("testbench.vcd");
-    $dumpvars(0, ALU_tb);
+    // Initial block to set up the simulation and print outputs
+    initial begin
+        // Initialize inputs
+        clk = 0;
+        reset = 1;
+        #10 reset = 0;  // Release reset after 10 time units
 
-    #10 //maybe wait for initial data be processed
-    ALUop = 2'b11;
-    #5 
-    ALUop = 2'b10;
-    #5 
-    ALUop = 2'b01;
-    #5 
-    ALUop = 2'b00;
-    #5 
-    $finish;
-end
+        // Set up waveform dumping
+        $dumpfile("cpu_tb.vcd"); // Dump the waveform to a .vcd file for GTKWave
+        $dumpvars(0, cpu_tb);     // Dump all variables in the testbench
 
-initial begin 
-    $monitor("Time: %0t | ALU signal : %b | A: %b, A: %b, Result: %b", $time, ALUop, A, B, Result);
-end 
+        // Print initial state
+        $display("Time\tReset\tPC_Out\tALU_Result");
+        $monitor("%0t\t%b\t%h\t%h", $time, reset, pc_out, alu_result);
+
+        // Simulate for a period and observe results
+        #100 $finish;
+    end
 
 endmodule
