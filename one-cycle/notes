@@ -1,0 +1,43 @@
+try to make a simple cpu to self-teach me about single cycle processor  
+
+First of first, CPU has main operation sequence, namely Fetch, Decode, Execute. Thats all
+
+Fetch is the process of retrieving an instruction from a place, called program memory, where the address is determined by a program counter
+
+Decode operation perform translation of an instruction to a binary signal so that control a part / operation of the cpu (like, do calculation using ALU!)
+
+Execute. U know that. 
+
+So, a simple single cycle CPU has this main part : Registers, ALU (Arithmetic Logic Unit), Control Unit, Program COunter, isntruction memory, and data memory
+
+First, i gonna create a simple ALU for binary operation like addition and bitwise operation
+
+Will be A, B, Result data, and ALUop (operation signal) there!@
+
+goin to implement it using ‘case’ syntax 
+
+update : "wire [3:0] Result;" use wire on testbench because the result is output, and outputs on tesbench are driven by DUT (device under test)
+
+then, create the register to store value from ALU or the PC
+
+program counter is like execution tracker based on the counter?
+
+nah, the instruction memory can store small instruction like ADD, SUM (literally small word)
+
+ 
+
+then, lets create the control unit, ugh
+
+This is basically the CPU’s brain. It decides what to do based on the instruction it reads. So, if your instruction says "Add," the CU needs to shout, "Hey ALU, do some addition!"
+
+Next up, the Program Counter (PC). Think of it as your CPU’s GPS. It tells the CPU which instruction to fetch next by counting up. It also handles resets and any big jumps in your program.
+
+Your Instruction Memory needs to be loaded with cool instructions like ADD, SUB, AND. Each instruction needs to be coded in binary so the CPU knows what to do.
+
+Don’t forget Data Memory! This is where your CPU keeps its data. The CU will send signals to read or write data from this memory.
+
+Now, plug everything together: the PC gets the address, Instruction Memory fetches the instruction, the CU figures out what to do, and the ALU does the heavy lifting. The results go back into registers or Data Memory.
+
+Make a testbench to see if everything works. Run simulations and check out the waveforms with GTKWave. You can even add print statements to see what's going on inside the CPU.
+
+And there you have it—a simple CPU! Each part plays a role, and putting them together will make your CPU run smoothly. Keep tweaking and testing to make it even better. Have fun building!
